@@ -4,6 +4,13 @@
 const drugSelect = document.getElementById("drug");
 const laakelista = document.getElementById("laakelista").rows;
 
+// Добавляем пустой вариант
+const emptyOption = document.createElement("option");
+emptyOption.value = "";
+emptyOption.textContent = "";
+drugSelect.appendChild(emptyOption);
+
+// Добавляем препараты
 for (let i = 0; i < laakelista.length; i++) {
     const name = laakelista[i].cells[0].textContent;
     const option = document.createElement("option");
@@ -56,7 +63,6 @@ function loadDrug() {
 
     concDisplay.textContent = `${concentration} ${concUnit}`;
 
-    // Определяем единицы дозы
     if (concUnit.includes("mg")) {
         doseUnit = "mg/kg/h";
     } else {
@@ -64,7 +70,6 @@ function loadDrug() {
     }
     doseUnitCell.textContent = doseUnit;
 
-    // Подсказка-памятка
     doseInfo.textContent = `${minDose}–${maxDose} ${doseUnit}`;
 
     calculateAll();
@@ -88,19 +93,29 @@ function calculateAll() {
 
     doseWarning.textContent = "";
 
+    // Если препарат не выбран — ничего не считаем
+    if (drugSelect.value === "") {
+        mgH.textContent = "";
+        mgKgH.textContent = "";
+        ugKgH.textContent = "";
+        ugKgMin.textContent = "";
+        mlH.textContent = "";
+        return;
+    }
+
     // ---------------------------
-    //  ЕСЛИ ВВЕДЁН RATE → считаем дозу
+    //  RATE → DOSE
     // ---------------------------
     if (!isNaN(rate) && rate > 0) {
-        const mgPerH = rate * concentration / 1000; // mg/h
-        const ugPerH = mgPerH * 1000;               // µg/h
+        const mgPerH = rate * concentration / 1000;
+        const ugPerH = mgPerH * 1000;
 
         mgH.textContent = mgPerH.toFixed(3);
         mgKgH.textContent = weight ? (mgPerH / weight).toFixed(3) : "";
         ugKgH.textContent = weight ? (ugPerH / weight).toFixed(3) : "";
         ugKgMin.textContent = weight ? (ugPerH / weight / 60).toFixed(3) : "";
 
-        mlH.textContent = rate.toFixed(1);          // ✔ округление до 1 знака
+        mlH.textContent = rate.toFixed(1);
 
         if (document.activeElement === rateInput) {
             doseInput.value = "";
@@ -108,13 +123,13 @@ function calculateAll() {
     }
 
     // ---------------------------
-    //  ЕСЛИ ВВЕДЕНА ДОЗА → считаем скорость
+    //  DOSE → RATE
     // ---------------------------
     if (!isNaN(dose) && dose > 0 && weight > 0) {
 
         if (doseUnit === "mg/kg/h") {
-            const mgPerH = dose * weight;          // mg/h
-            const mlPerH = mgPerH / concentration; // ✔ без ×1000
+            const mgPerH = dose * weight;
+            const mlPerH = mgPerH / concentration;
 
             mlH.textContent = mlPerH.toFixed(1);
             rateInput.value = mlPerH.toFixed(1);
@@ -125,7 +140,6 @@ function calculateAll() {
             ugKgMin.textContent = (dose * 1000 / 60).toFixed(3);
 
         } else {
-            // µg/kg/min
             const ugPerMin = dose * weight;
             const ugPerH = ugPerMin * 60;
             const mlPerH = ugPerH / concentration;
@@ -168,15 +182,27 @@ clearAllBtn.onclick = () => {
 
     doseWarning.textContent = "";
 
-    // ✔ сбрасываем препарат
+    // Сбрасываем препарат в пустой вариант
     drugSelect.selectedIndex = 0;
-    loadDrug();
+
+    concDisplay.textContent = "";
+    doseUnitCell.textContent = "";
+    doseInfo.textContent = "";
 };
 
 // ===============================
 //  ОБРАБОТЧИКИ
 // ===============================
-drugSelect.onchange = loadDrug;
+drugSelect.onchange = () => {
+    if (drugSelect.value === "") {
+        concDisplay.textContent = "";
+        doseUnitCell.textContent = "";
+        doseInfo.textContent = "";
+        calculateAll();
+        return;
+    }
+    loadDrug();
+};
 
 weightInput.oninput = calculateAll;
 
@@ -191,6 +217,6 @@ doseInput.oninput = () => {
 };
 
 // ===============================
-//  СТАРТ
+//  СТАРТ — препарат НЕ загружаем
 // ===============================
-loadDrug();
+drugSelect.selectedIndex = 0;
