@@ -33,10 +33,27 @@
       font-size: 15px;
     }
 
-    /* Столбцы */
-    table td:nth-child(1) { width: 30%; }
-    table td:nth-child(2) { width: 53%; }
+    /* --- Новые ширины столбцов --- */
+    table td:nth-child(1) { width: 28%; }
+    table td:nth-child(2) { width: 59%; }
     table td:nth-child(3) { width: 13%; }
+
+    /* --- Визуальное сужение второго столбца --- */
+    table td:nth-child(2) {
+      text-align: right;
+      padding-left: 0;
+    }
+
+    /* --- Числовые значения — вправо --- */
+    td span {
+      display: block;
+      text-align: right;
+    }
+
+    /* --- Правое выравнивание единиц в нижнем блоке --- */
+    .blue td:nth-child(2) {
+      text-align: right;
+    }
 
     .pink { background: #ffe6f2; }
     .gray { background: #f2f2f2; }
@@ -52,12 +69,6 @@
       font: inherit;
       padding: 0;
       outline: none;
-    }
-
-    /* Числовые значения — вправо */
-    td span {
-      display: block;
-      text-align: right;
     }
 
     /* Активное поле */
@@ -92,15 +103,29 @@
       z-index: 999;
     }
 
-    /* Компактный мобильный режим */
+    /* --- Компактный мобильный режим --- */
     @media (max-width: 480px) {
-      td { padding: 6px 4px; font-size: 15px; }
-      input, select { font-size: 16px; padding: 6px; }
-      .blue td { padding-top: 4px; padding-bottom: 4px; }
-      td span { font-size: 16px; }
+      td {
+        padding: 6px 4px;
+        font-size: 15px;
+      }
+
+      input, select {
+        font-size: 16px;
+        padding: 6px;
+      }
+
+      .blue td {
+        padding-top: 4px;
+        padding-bottom: 4px;
+      }
+
+      td span {
+        font-size: 16px;
+      }
     }
 
-    /* Тёмная тема */
+    /* --- Тёмная тема --- */
     body.dark { background: #1c1f22; color: #e6e6e6; }
     body.dark h1 { color: #d0e4ff; }
     body.dark table td { border-color: #444; color: #e6e6e6; }
@@ -232,4 +257,3 @@
 
 </body>
 </html>
-
