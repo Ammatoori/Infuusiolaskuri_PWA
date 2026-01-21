@@ -99,30 +99,35 @@
     <td class="gray" id="concDisplay"></td>
   </tr>
 
-  <tr class="pink">
-    <td class="bold">Paino</td>
-    <td class="gray"><input id="weight" type="number" step="0.1"></td>
-    <td class="gray">kg</td>
-  </tr>
-
-  <tr class="pink">
-    <td class="bold">Nopeus</td>
-    <td class="gray"><input id="rate" type="number" step="0.01"></td>
-    <td class="gray">ml/h</td>
-  </tr>
-
-<!-- ВСТАВЛЕННАЯ СТРОКА -->
-<tr>
-  <td class="center bold" colspan="3" style="padding: 4px; font-size: 14px; opacity: 0.7;">
-    tai
-  </td>
+ <tr class="pink">
+  <td class="bold">Paino</td>
+  <td class="gray"><input id="weight" type="number" step="0.1"></td>
+  <td class="gray">kg</td>
 </tr>
-  
-  <tr class="pink">
-    <td class="bold">Tavoitettu annos</td>
-    <td class="gray"><input id="doseInput" type="number" step="0.001"></td>
-    <td class="gray" id="doseUnitCell"></td>
-  </tr>
+
+<!-- ПУСТАЯ СТРОКА-РАЗДЕЛИТЕЛЬ -->
+<tr>
+  <td colspan="3" style="height: 6px; background: transparent;"></td>
+</tr>
+
+<tr class="pink">
+  <td class="bold">Nopeus</td>
+  <td class="gray"><input id="rate" type="number" step="0.01"></td>
+  <td class="gray">ml/h</td>
+</tr>
+
+<!-- СТРОКА "tai" В ПЕРВОМ СТОЛБЦЕ -->
+<tr>
+  <td class="center bold" style="padding: 4px; opacity: 0.7;">tai</td>
+  <td colspan="2"></td>
+</tr>
+
+<tr class="pink">
+  <td class="bold">Tavoitettu annos</td>
+  <td class="gray"><input id="doseInput" type="number" step="0.001"></td>
+  <td class="gray" id="doseUnitCell"></td>
+</tr>
+
 
   <tr><td class="warning" id="doseWarning" colspan="3"></td></tr>
 
@@ -172,4 +177,5 @@
 
 </body>
 </html>
+
 
