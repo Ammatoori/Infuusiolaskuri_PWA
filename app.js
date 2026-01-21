@@ -110,10 +110,10 @@ function calculateAll() {
         const mgPerH = rate * concentration / 1000;
         const ugPerH = mgPerH * 1000;
 
-        mgH.textContent = mgPerH.toFixed(3);
-        mgKgH.textContent = weight ? (mgPerH / weight).toFixed(3) : "";
-        ugKgH.textContent = weight ? (ugPerH / weight).toFixed(3) : "";
-        ugKgMin.textContent = weight ? (ugPerH / weight / 60).toFixed(3) : "";
+        mgH.textContent = mgPerH.toFixed(2);
+        mgKgH.textContent = weight ? (mgPerH / weight).toFixed(2) : "";
+        ugKgH.textContent = weight ? (ugPerH / weight).toFixed(2) : "";
+        ugKgMin.textContent = weight ? (ugPerH / weight / 60).toFixed(2) : "";
 
         mlH.textContent = rate.toFixed(1);
 
@@ -134,10 +134,10 @@ function calculateAll() {
             mlH.textContent = mlPerH.toFixed(1);
             rateInput.value = mlPerH.toFixed(1);
 
-            mgH.textContent = mgPerH.toFixed(3);
-            mgKgH.textContent = dose.toFixed(3);
-            ugKgH.textContent = (dose * 1000).toFixed(3);
-            ugKgMin.textContent = (dose * 1000 / 60).toFixed(3);
+            mgH.textContent = mgPerH.toFixed(2);
+            mgKgH.textContent = dose.toFixed(2);
+            ugKgH.textContent = (dose * 1000).toFixed(2);
+            ugKgMin.textContent = (dose * 1000 / 60).toFixed(2);
 
         } else {
             const ugPerMin = dose * weight;
@@ -220,3 +220,4 @@ doseInput.oninput = () => {
 //  СТАРТ — препарат НЕ загружаем
 // ===============================
 drugSelect.selectedIndex = 0;
+
