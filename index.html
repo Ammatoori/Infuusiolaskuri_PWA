@@ -22,7 +22,7 @@
     table {
       border-collapse: collapse;
       width: 100%;
-      max-width: 900px;
+      max-width: 520px; /* ← Вариант B */
       margin: auto;
       table-layout: fixed;
     }
@@ -33,7 +33,7 @@
       font-size: 15px;
     }
 
-    /* --- Новые ширины столбцов --- */
+    /* --- Ширины столбцов --- */
     table td:nth-child(1) { width: 28%; }
     table td:nth-child(2) { width: 59%; }
     table td:nth-child(3) { width: 13%; }
@@ -71,13 +71,11 @@
       outline: none;
     }
 
-    /* Активное поле */
     .active-field {
       background: #fff3cd !important;
       transition: background 0.2s;
     }
 
-    /* Кнопка очистки */
     #clearAllBtn {
       display: block;
       margin: 20px auto 0;
@@ -89,7 +87,6 @@
       cursor: pointer;
     }
 
-    /* Переключатель темы */
     #themeToggle {
       position: fixed;
       top: 12px;
@@ -192,7 +189,6 @@
 
   <tr><td class="gray bold" colspan="3" id="doseWarning"></td></tr>
 
-  <!-- Новый нижний блок -->
   <tr class="blue">
     <td class="bold">Laskettu nopeus</td>
     <td class="gray">ml/h</td>
@@ -234,7 +230,6 @@
 <script src="app.js"></script>
 
 <script>
-  /* Авто-тема */
   function applySystemTheme() {
     if (localStorage.getItem("theme") === "light") return;
     if (localStorage.getItem("theme") === "dark") {
@@ -248,7 +243,6 @@
   applySystemTheme();
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applySystemTheme);
 
-  /* Переключатель темы */
   document.getElementById("themeToggle").onclick = () => {
     document.body.classList.toggle("dark");
     localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
