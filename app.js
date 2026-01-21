@@ -86,7 +86,6 @@ function calculateAll() {
     const rate = parseFloat(rateInput.value);
     const dose = parseFloat(doseInput.value);
 
-    // Очистка предупреждений
     doseWarning.textContent = "";
 
     // ---------------------------
@@ -100,9 +99,9 @@ function calculateAll() {
         mgKgH.textContent = weight ? (mgPerH / weight).toFixed(3) : "";
         ugKgH.textContent = weight ? (ugPerH / weight).toFixed(3) : "";
         ugKgMin.textContent = weight ? (ugPerH / weight / 60).toFixed(3) : "";
-        mlH.textContent = rate.toFixed(3);
 
-        // Если введён RATE — очищаем поле дозы
+        mlH.textContent = rate.toFixed(1);          // ✔ округление до 1 знака
+
         if (document.activeElement === rateInput) {
             doseInput.value = "";
         }
@@ -112,28 +111,27 @@ function calculateAll() {
     //  ЕСЛИ ВВЕДЕНА ДОЗА → считаем скорость
     // ---------------------------
     if (!isNaN(dose) && dose > 0 && weight > 0) {
-        let ugPerMin = 0;
 
-if (doseUnit === "mg/kg/h") {
-    const mgPerH = dose * weight;              // mg/h
-    const mlPerH = mgPerH / concentration;     // ml/h, т.к. conc в mg/ml
+        if (doseUnit === "mg/kg/h") {
+            const mgPerH = dose * weight;          // mg/h
+            const mlPerH = mgPerH / concentration; // ✔ без ×1000
 
-    mlH.textContent = mlPerH.toFixed(3);
-    rateInput.value = mlPerH.toFixed(3);
+            mlH.textContent = mlPerH.toFixed(1);
+            rateInput.value = mlPerH.toFixed(1);
 
-    mgH.textContent = mgPerH.toFixed(3);
-    mgKgH.textContent = dose.toFixed(3);
-    ugKgH.textContent = (dose * 1000).toFixed(3);
-    ugKgMin.textContent = (dose * 1000 / 60).toFixed(3);
-}
- else {
+            mgH.textContent = mgPerH.toFixed(3);
+            mgKgH.textContent = dose.toFixed(3);
+            ugKgH.textContent = (dose * 1000).toFixed(3);
+            ugKgMin.textContent = (dose * 1000 / 60).toFixed(3);
+
+        } else {
             // µg/kg/min
-            ugPerMin = dose * weight;
+            const ugPerMin = dose * weight;
             const ugPerH = ugPerMin * 60;
             const mlPerH = ugPerH / concentration;
 
-            mlH.textContent = mlPerH.toFixed(3);
-            rateInput.value = mlPerH.toFixed(3);
+            mlH.textContent = mlPerH.toFixed(1);
+            rateInput.value = mlPerH.toFixed(1);
 
             mgH.textContent = (ugPerH / 1000).toFixed(3);
             mgKgH.textContent = (ugPerH / 1000 / weight).toFixed(3);
@@ -169,6 +167,10 @@ clearAllBtn.onclick = () => {
     mlH.textContent = "";
 
     doseWarning.textContent = "";
+
+    // ✔ сбрасываем препарат
+    drugSelect.selectedIndex = 0;
+    loadDrug();
 };
 
 // ===============================
@@ -192,4 +194,3 @@ doseInput.oninput = () => {
 //  СТАРТ
 // ===============================
 loadDrug();
-
