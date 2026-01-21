@@ -133,6 +133,42 @@
     body.dark input, body.dark select { color: #ffffff; }
     body.dark #clearAllBtn { background: #2a3b4f; border-color: #4f7aa3; color: #d0e4ff; }
     body.dark #themeToggle { background: #3a3a3a; color: #fff; border-color: #666; }
+  
+/* --- Адаптивная типографика --- */
+
+/* Большие экраны (по умолчанию) */
+body {
+  font-size: 16px;
+}
+
+/* Средние экраны */
+@media (max-width: 900px) {
+  body {
+    font-size: 15px;
+  }
+}
+
+/* Маленькие экраны */
+@media (max-width: 700px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+/* Очень маленькие экраны */
+@media (max-width: 500px) {
+  body {
+    font-size: 13px;
+  }
+}
+
+/* Ультра-компактный режим */
+@media (max-width: 400px) {
+  body {
+    font-size: 12px;
+  }
+}
+
   </style>
 </head>
 
@@ -251,5 +287,6 @@
 
 </body>
 </html>
+
 
 
