@@ -114,18 +114,19 @@ function calculateAll() {
     if (!isNaN(dose) && dose > 0 && weight > 0) {
         let ugPerMin = 0;
 
-        if (doseUnit === "mg/kg/h") {
-            const mgPerH = dose * weight;
-            const mlPerH = mgPerH * 1000 / concentration;
-            mlH.textContent = mlPerH.toFixed(3);
-            rateInput.value = mlPerH.toFixed(3);
+if (doseUnit === "mg/kg/h") {
+    const mgPerH = dose * weight;              // mg/h
+    const mlPerH = mgPerH / concentration;     // ml/h, т.к. conc в mg/ml
 
-            mgH.textContent = mgPerH.toFixed(3);
-            mgKgH.textContent = dose.toFixed(3);
-            ugKgH.textContent = (dose * 1000).toFixed(3);
-            ugKgMin.textContent = (dose * 1000 / 60).toFixed(3);
+    mlH.textContent = mlPerH.toFixed(3);
+    rateInput.value = mlPerH.toFixed(3);
 
-        } else {
+    mgH.textContent = mgPerH.toFixed(3);
+    mgKgH.textContent = dose.toFixed(3);
+    ugKgH.textContent = (dose * 1000).toFixed(3);
+    ugKgMin.textContent = (dose * 1000 / 60).toFixed(3);
+}
+ else {
             // µg/kg/min
             ugPerMin = dose * weight;
             const ugPerH = ugPerMin * 60;
@@ -191,3 +192,4 @@ doseInput.oninput = () => {
 //  СТАРТ
 // ===============================
 loadDrug();
+
