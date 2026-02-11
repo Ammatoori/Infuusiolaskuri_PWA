@@ -234,7 +234,11 @@ if (rate) {
     document.getElementById("ugKgH").textContent = ugKgH.toFixed(2);
     document.getElementById("ugKgMin").textContent = ugKgMin.toFixed(3);
 
-    if (mgKgH < minDose || mgKgH > maxDose) {
+    // ✅ FIX: compare apples-to-apples (convert recommended range to mg/kg/h)
+    const minDoseMgKgH = doseToMgKgH(minDose, doseUnit);
+    const maxDoseMgKgH = doseToMgKgH(maxDose, doseUnit);
+
+    if (mgKgH < minDoseMgKgH || mgKgH > maxDoseMgKgH) {
       doseWarning.textContent = i18n[currentLang].warnings.outOfRange;
     }
   }
@@ -292,6 +296,7 @@ if (rate) {
   };
 
 });
+
 
 
 
