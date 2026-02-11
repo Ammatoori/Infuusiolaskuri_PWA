@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <title id="title"></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+      color: #000;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    /* REMOVE ALL TABLE BORDERS */
+    table {
+      border-collapse: collapse;
+      border: none;
+      width: 100%;
+      max-width: 520px;
+      margin: auto;
+      table-layout: fixed;
+    }
+
+    td {
+      border: none;
+      padding: 8px;
+      font-size: 15px;
+    }
+
+    table td:nth-child(1) { width: 28%; }
+    table td:nth-child(2) { width: 59%; }
+    table td:nth-child(3) { width: 13%; }
+
+    table td:nth-child(2) {
+      text-align: right;
+      padding-left: 0;
+    }
+
+    td span {
+      display: block;
+      text-align: right;
+    }
+
+    .pink { background: #ffe6f2; }
+    .gray { background: #f2f2f2; }
+    .blue { background: #e6f3ff; }
+
+    .bold { font-weight: 700; }
+    .center { text-align: center; }
+
+    input, select {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font: inherit;
+      padding: 0;
+      outline: none;
+      color: inherit;
+    }
+
+    #clearAllBtn {
+      display: block;
+      margin: 20px auto 0;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #e6f3ff;
+      border: 1px solid #90c2ff;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    /* TOP BUTTONS */
+    #themeToggle, #langToggle, #infoToggle {
+      position: fixed;
+      top: 12px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      border: 1px solid #aaa;
+      background: #ddd;
+      z-index: 999;
+    }
+
+    #themeToggle { right: 12px; }
+    #langToggle { right: 70px; }
+    #infoToggle {
+      right: 128px;
+      padding: 4px 8px;
+      border-radius: 50%;
+      font-weight: 700;
+    }
+
+    /* WARNING */
+    #doseWarning {
+      background: #fff3cd;
+      color: #d8000c;
+      padding: 6px 10px;
+      border-radius: 4px;
+      border: 1px solid #f5c06f;
+      text-align: center;
+    }
+
+    /* GREEN RECOMMENDED DOSE */
+    #doseInfo {
+      text-align: center;
+      background: #e6f9e6;
+      color: #1f7a1f;
+      font-weight: 600;
+    }
+
+    /* INFO BOX */
+    #infoBox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    #infoContent {
+      max-width: 420px;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 16px 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    #infoTitle {
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    #infoText {
+      margin-bottom: 12px;
+    }
+
+    #infoClose {
+      display: block;
+      margin: 0 auto;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+      background: #f2f2f2;
+      cursor: pointer;
+    }
+
+    #infoLink {
+      margin-top: 12px;
+      font-size: 13px;
+      text-align: center;
+      opacity: 0.8;
+    }
+
+    #infoLink a {
+      color: #0077cc;
+      text-decoration: none;
+    }
+
+    #infoLink a:hover {
+      text-decoration: underline;
+    }
+
+    /* DARK THEME */
+    body.dark {
+      background: #1c1f22;
+      color: #e6e6e6;
+    }
+
+    body.dark table td {
+      color: #e6e6e6;
+    }
+
+    body.dark .pink { background: #4a2f3b !important; }
+    body.dark .gray { background: #2b2b2b !important; }
+    body.dark .blue { background: #243447 !important; }
+
+    body.dark input,
+    body.dark select {
+      color: #e6e6e6;
+      background: transparent;
+    }
+
+    body.dark select option {
+      background: #2b2b2b;
+      color: #e6e6e6;
+    }
+
+    body.dark #doseWarning {
+      background: #5a4a1e;
+      color: #ffb3b3;
+      border-color: #8a6d3b;
+    }
+
+    body.dark #infoContent {
+      background: #2b2b2b;
+      color: #f0f0f0;
+    }
+
+    body.dark #infoClose {
+      background: #3a3a3a;
+      border-color: #666;
+      color: #fff;
+    }
+
+    body.dark #infoLink a {
+      color: #66aaff;
+    }
+  </style>
+</head>
+
+<body>
+
+<button id="themeToggle">🌙</button>
+<button id="langToggle"></button>
+<button id="infoToggle">i</button>
+
+<!-- INFO BOX -->
+<div id="infoBox">
+  <div id="infoContent">
+    <div id="infoTitle">Infusion Calculator</div>
+
+    <div id="infoText">
+      This tool is designed for healthcare professionals who prepare and adjust continuous drug infusions.
+      It provides weight‑based dose calculations, infusion rates, and unit conversions.
+    </div>
+
+    <div id="infoLink">
+      Source code: <a href="#" target="_blank">GitHub</a><br>
+      Developed by D.M. (2026)
+    </div>
+
+    <button id="infoClose">Close</button>
+  </div>
+</div>
+
+<h1 id="title"></h1>
+
+<!-- HIDDEN DRUG LIST -->
+<table id="laakelista" style="display:none;">
+  <tr><td>Remifentanyl 50 µg/ml</td><td>50</td><td>µg/ml</td><td>0.05</td><td>2</td><td>µg/kg/min</td></tr>
+  <tr><td>Propofol 20 mg/ml</td><td>20</td><td>mg/ml</td><td>1</td><td>12</td><td>mg/kg/h</td></tr>
+  <tr><td>Ketamine 25 mg/ml</td><td>25</td><td>mg/ml</td><td>0.5</td><td>2</td><td>mg/kg/h</td></tr>
+  <tr><td>Milrinone 200 µg/ml</td><td>200</td><td>µg/ml</td><td>0.25</td><td>0.75</td><td>µg/kg/min</td></tr>
+  <tr><td>Dobutamine 500 µg/ml</td><td>500</td><td>µg/ml</td><td>2</td><td>20</td><td>µg/kg/min</td></tr>
+  <tr><td>Noradrenalin 80 µg/ml</td><td>80</td><td>µg/ml</td><td>0.01</td><td>0.5</td><td>µg/kg/min</td></tr>
+  <tr><td>Noradrenalin 40 µg/ml</td><td>40</td><td>µg/ml</td><td>0.01</td><td>0.5</td><td>µg/kg/min</td></tr>
+  <tr><td>Adrenalin 20 µg/ml</td><td>20</td><td>µg/ml</td><td>0.01</td><td>0.5</td><td>µg/kg/min</td></tr>
+</table>
+
+<table>
+
+  <tr class="pink">
+    <td class="bold" id="labelDrug"></td>
+    <td class="gray"><select id="drug"></select></td>
+    <td class="gray" id="concDisplay"></td>
+  </tr>
+
+  <tr class="pink">
+    <td class="bold" id="labelWeight"></td>
+    <td class="gray"><input id="weight" type="number" step="0.1"></td>
+    <td class="gray">kg</td>
+  </tr>
+
+  <tr><td colspan="3" style="height:6px;background:transparent;"></td></tr>
+
+  <tr class="pink">
+    <td class="bold" id="labelRate"></td>
+    <td class="gray"><input id="rate" type="number" step="0.01"></td>
+    <td class="gray">ml/h</td>
+  </tr>
+
+  <tr>
+    <td class="center bold" id="labelOr"></td>
+    <td colspan="2"></td>
+  </tr>
+
+  <tr class="pink">
+    <td class="bold" id="labelDose"></td>
+    <td class="gray"><input id="doseInput" type="number" step="0.001"></td>
+    <td class="gray" id="doseUnitCell"></td>
+  </tr>
+
+  <tr><td class="gray bold" colspan="3" id="doseWarning"></td></tr>
+
+  <tr class="blue">
+    <td class="bold" id="labelCalcRate"></td>
+    <td class="gray">ml/h</td>
+    <td><span id="mlH"></span></td>
+  </tr>
+
+  <tr class="blue">
+    <td class="bold" id="labelCalcDoses"></td>
+    <td class="gray">mg/h</td>
+    <td><span id="mgH"></span></td>
+  </tr>
+
+  <tr class="blue">
+    <td></td>
+    <td class="gray">mg/kg/h</td>
+    <td><span id="mgKgH"></span></td>
+  </tr>
+
+  <tr class="blue">
+    <td></td>
+    <td class="gray">µg/kg/h</td>
+    <td><span id="ugKgH"></span></td>
+  </tr>
+
+  <tr class="blue">
+    <td></td>
+    <td class="gray">µg/kg/min</td>
+    <td><span id="ugKgMin"></span></td>
+  </tr>
+
+  <tr>
+    <td class="gray bold" colspan="3" id="doseInfo"></td>
+  </tr>
+
+</table>
+
+<button id="clearAllBtn"></button>
+
+<script src="app.js"></script>
+
+</body>
+</html>
+
+
